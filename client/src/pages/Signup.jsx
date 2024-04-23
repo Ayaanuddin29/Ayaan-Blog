@@ -73,7 +73,7 @@ function Signup() {
       </Button>
      </form>
      <div className="flex gap-2 text-sm mt-5">
-  <span>Have an Account? </span><Link to='/sign-in' className="text-blue-500">Click Here</Link>
+  <span>Have an Account? </span><Link to='/sign-in' className="text-blue-500">Sign-in</Link>
      </div>
      {
       errorMessage &&(
