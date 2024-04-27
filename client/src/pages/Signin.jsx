@@ -4,6 +4,7 @@ import { Link,useNavigate} from "react-router-dom"
 import { signInStart,signInFaliure,signInSuccess } from "../user/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import OAuth from "../components/OAuth";
 function Signin() {
   const dispatch=useDispatch();
   const [formData,setFormData]=useState({});
@@ -70,6 +71,7 @@ dispatch(signInStart())
          ):'Sign-In'
        }
      </Button>
+     <OAuth/>
     </form>
     <div className="flex gap-2 text-sm mt-5">
  <span>Don't Have an account </span><Link to='/sign-up' className="text-blue-500">Sign Up</Link>
