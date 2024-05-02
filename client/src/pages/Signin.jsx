@@ -65,7 +65,7 @@ dispatch(signInStart())
        {
          loading?(
            <>
-          <Spinner sie='sm'/>
+          <Spinner size='sm'/>
           <span className="pl-1">Loading...</span>
           </>
          ):'Sign-In'
