@@ -66,3 +66,11 @@ catch(err){
   next(err);
 }
 }
+export const signout=async(req,res,next)=>{
+try{
+res.clearCookie('access_token').status(200).json({message:'User Has SignOut'});
+}
+catch(err){
+next(err)
+}
+}
