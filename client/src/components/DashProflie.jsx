@@ -3,12 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
 import { app } from '../firebase';
+import{Link} from 'react-router-dom'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { updateStart,updateFailure,updateSuccess,deleteUserStart,deleteUserSuccess,deleteUserFailure,signoutSuccess} from '../user/userSlice';
 import {HiOutlineExclamationCircle} from 'react-icons/hi'
 function DashProflie() {
-    const {currentUser,error}=useSelector(state=>state.user);
+    const {currentUser,error,loading}=useSelector(state=>state.user);
     const [imageFile,setImageFile]=useState(null);
     const [imageFileUrl,setImageFileUrl]=useState(null);
     const filePickerRef=useRef();
@@ -158,9 +159,15 @@ dispatch(updateFailure(err.message));
     <TextInput className='mt-5' type='text' id='username' placeholder='username' defaultValue={currentUser.username} onChange={handleChange}/>
     <TextInput className='mt-5' type='text' id='email' placeholder='email' defaultValue={currentUser.email} onChange={handleChange}/>
     <TextInput className='mt-5' type='text' id='password' placeholder='password' onChange={handleChange}/>
-    <Button className='mt-5' type='submit' gradientDuoTone='purpleToBlue' outline>
-        Update
+    <Button className='mt-5 mb-5' type='submit' gradientDuoTone='purpleToBlue' outline disabled={loading||imageFileUploading}>
+        {loading?'Loading...':'Update'}
     </Button>
+    {  currentUser.isAdmin&&(
+      <Link to={'/create-post'}>
+        <Button className='mt-5' type='button' gradientDuoTone='purpleToPink' className='w-full'>Create a Post</Button>
+      </Link>
+      )
+    }
    </form>
    <div className='text-red-500 flex justify-between mt-5'>
     <span className='cursor-pointer' onClick={()=>{
