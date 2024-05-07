@@ -1,11 +1,14 @@
-import { Table } from "flowbite-react";
+import { Modal, Table,Button } from "flowbite-react";
 import { useEffect, useState } from "react"
 import {useSelector} from 'react-redux';
 import { Link } from "react-router-dom";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 function DashPost() {
     const {currentUser}=useSelector(state=>state.user);
     const [userPosts,setUserPosts]=useState([]);
     const [showMore,setShowMore]=useState(true);
+    const [showModel,setShowModel]=useState(false);
+    const [postIdToDelete,setPostIdToDelete]=useState('')
     console.log(userPosts)
     useEffect(()=>{
      const fetchPosts=async()=>{
@@ -42,6 +45,26 @@ function DashPost() {
       catch(err){
         console.log(err);
       }
+    }
+    const handleDeletePost=async()=>{
+      setShowModel(false);
+ try{
+  const res=await fetch(`/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,{
+    method:'DELETE',
+  })
+  const data=res.json();
+  if(!res.ok){
+    console.log(data.message);
+  }
+  else{
+    setUserPosts((prev)=>
+      prev.filter((post)=>post._id!==postIdToDelete)
+    )
+  }
+ }
+ catch(error){
+  console.log(error)
+ }
     }
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
@@ -84,7 +107,8 @@ function DashPost() {
                         </Table.Cell>
                         <Table.Cell>{post.category}</Table.Cell>
                         <Table.Cell>
-                            <span className="font-medium text-red-500 hover:underline cursor-pointer">Delete</span>
+                            <span className="font-medium text-red-500 hover:underline cursor-pointer" onClick={()=>{setShowModel(true);
+                            setPostIdToDelete(post._id)}}>Delete</span>
                         </Table.Cell>
                         <Table.Cell>
                         <Link className="text-teal-500 hover:underline" to={`/update-post/${post._id}`}>
@@ -104,6 +128,19 @@ function DashPost() {
             }
           </>  
         ):(<p>Ther is no post</p>)}
+        <Modal show={showModel} onClose={()=>setShowModel(false)}popup size='md'>
+<Modal.Header/>
+<Modal.Body>
+  <div className='text-center'>
+    <HiOutlineExclamationCircle  className='mx-auto mb-4 h-14 w-14 text-gray-500 dark:text-gray-700'/>
+    <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>Are You sure you want to delete your Post?</h3>
+    <div className='flex justify-between'>
+       <Button color='failure' onClick={handleDeletePost}>Yes I'm Sure</Button>
+       <Button color='gray' onClick={()=>setShowModel(false)}>No Cancel</Button>
+    </div>
+  </div>
+</Modal.Body>
+   </Modal>
     </div>
   )
 }
