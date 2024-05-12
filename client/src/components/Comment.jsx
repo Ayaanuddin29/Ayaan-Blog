@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import {FaThumbsUp} from 'react-icons/fa'
 import { useSelector } from "react-redux";
 
-export default function Comment({comment,onLike,onEdit}) {
+export default function Comment({comment,onLike,onEdit,onDelete}) {
     const {currentUser}=useSelector(state=>state.user);
     const [user,setUser]=useState([]);
     const [isEditing,setIsEditing]=useState(false);
@@ -37,7 +37,7 @@ export default function Comment({comment,onLike,onEdit}) {
     'Content-Type':'application/json'
   },
   body:JSON.stringify({
-    content:editedContent
+    content:editedContent,
   })
  });
  if(res.ok){
@@ -64,7 +64,7 @@ export default function Comment({comment,onLike,onEdit}) {
           <Textarea className="mb-2"
       rows='3'  value={editedContent} onChange={(e)=>setEditedContent(e.target.value)} />
       <div className="flex justify-between text-sm">
-        <Button className="" type='button' size='sm' gradientDuoTone='purpleToBlue' onClick={()=>handleSave()}>Save</Button>
+        <Button className="" type='button' size='sm' gradientDuoTone='purpleToBlue' onClick={handleSave}>Save</Button>
         <Button className="" type='button' size='sm' gradientDuoTone='purpleToBlue' outline onClick={()=>setIsEditing(false)}>cancel</Button>
       </div>
           </> )
@@ -78,9 +78,15 @@ export default function Comment({comment,onLike,onEdit}) {
           <p className="text-gray-400">{comment.numberOfLikes>0 && comment.numberOfLikes+" "+(comment.numberOfLikes===1?"Like":"Likes")}</p>
           {currentUser && (currentUser._id ===comment.userId || 
           currentUser.isAdmin) && (
+            <>
             <button type="button" className="text-gray-500 hover:text-blue-600" onClick={handleEdit}>
               Edit
             </button>
+            <button type="button" className="text-gray-500 hover:text-red-600" onClick={()=>onDelete(comment._id)}>
+              Delete
+            </button>
+            </>
+           
           )
           }
         </div>
