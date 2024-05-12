@@ -54,3 +54,25 @@ export const likeComment=async(req,res,next)=>{
         next(err);
     }
 }
+
+export const editComment=async(req,res,next)=>{
+    try{
+   const comment=await Comment.findById(req.params.commentId);
+   if(!comment){
+    return next(errorHandler(404,'Comment Not Found'));
+   }
+   if(comment.userId!=req.user.id && !req.user.isAdmin){
+    return next(errorHandler(403,'You cannot Edit the Comment'));
+   }
+   const editComment=await Comment.findById(
+    req.params.commentId,
+    {
+        content:req.body.content,
+    },{new:true}
+   );
+   res.status(200).json(editComment)
+ }
+    catch(err){
+     next(err);
+    }
+}
