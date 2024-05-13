@@ -2,7 +2,7 @@ import {Sidebar} from 'flowbite-react'
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import {HiUser,HiArrowSmRight, HiDocumentText, HiOutlineUserGroup} from 'react-icons/hi'
+import {HiUser,HiArrowSmRight, HiDocumentText, HiOutlineUserGroup, HiAnnotation} from 'react-icons/hi'
 import { useDispatch, useSelector } from 'react-redux';
 import { signoutSuccess } from '../user/userSlice';
 function DashSidebar() {
@@ -41,6 +41,7 @@ function DashSidebar() {
           <Link to='/dashboard?tab=profile'>
           <Sidebar.Item active={tab==='profile'} icon={HiUser} label={currentUser.isAdmin?'Admin':'User'} labelColor='dark' as='div'>Profile</Sidebar.Item>
           </Link> 
+      
           {currentUser.isAdmin&&(
             <Link to='/dashboard?tab=posts'>
             <Sidebar.Item  active={tab==='posts'} icon={HiDocumentText} labelColor='dark' as='div'>Posts</Sidebar.Item>
@@ -49,6 +50,11 @@ function DashSidebar() {
           {currentUser.isAdmin&&(
             <Link to='/dashboard?tab=users'>
             <Sidebar.Item  active={tab==='users'} icon={HiOutlineUserGroup} labelColor='dark' as='div'>Users</Sidebar.Item>
+            </Link>
+          )}
+          {currentUser.isAdmin&&(
+            <Link to='/dashboard?tab=comments'>
+            <Sidebar.Item  active={tab==='comments'} icon={HiAnnotation} labelColor='dark' as='div'>Comments</Sidebar.Item>
             </Link>
           )}
             <Sidebar.Item onClick={handleSignOut} active icon={HiArrowSmRight} labelColor='dark' >Sign Out</Sidebar.Item>
