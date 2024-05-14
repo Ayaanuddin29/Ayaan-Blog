@@ -41,7 +41,7 @@ function DashSidebar() {
           {
             currentUser && currentUser.isAdmin &&(
               <Link to='/dashboard?tab=dash'>
-              <Sidebar.Item active={tab==='dash'||!tab} icon={HiChartPie} label={currentUser.isAdmin?'Admin':'User'} labelColor='dark' as='div'>Dashboard</Sidebar.Item>
+              <Sidebar.Item active={tab==='dash'||!tab} icon={HiChartPie}  labelColor='dark' as='div'>Dashboard</Sidebar.Item>
               </Link>
             )
           }

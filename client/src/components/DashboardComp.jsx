@@ -1,6 +1,6 @@
 import { Button, Table } from "flowbite-react";
 import { useEffect, useState } from "react"
-import { HiArrowNarrowUp, HiOutlineAnnotation, HiOutlineDocument, HiOutlineDocumentText, HiOutlineUserGroup } from "react-icons/hi";
+import { HiArrowNarrowUp, HiOutlineAnnotation, HiOutlineDocumentText, HiOutlineUserGroup } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -15,6 +15,7 @@ function DashboardComp() {
     const [lastMonthUsers,setLastMothUsers]=useState(0);
     const [lastMonthPosts,setLastMonthPosts]=useState(0);
     const [lastMonthComments,setLastMonthComments]=useState(0);
+    console.log(lastMonthPosts);
     useEffect(()=>{
         const fetchUsers=async()=>{
   try{
