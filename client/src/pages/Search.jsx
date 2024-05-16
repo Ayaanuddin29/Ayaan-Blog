@@ -79,21 +79,21 @@ const handleShowMore=async()=>{
     const urlParams=new URLSearchParams(location.search);
     urlParams.set('startIndex',startIndex);
     const searchQuery=urlParams.toString();
-    const res=await fetch(`/api/post/getpost?${searchQuery}`);
+    const res=await fetch(`/api/post/getposts?${searchQuery}`);
     if(!res.ok){
         return;
     }
     if(res.ok){
         const data=await res.json();
-        setPosts([...posts,data.posts]);
-        if(data.posts.length ===9 ){
+        setPosts([...posts, ...data.posts]);
+        if(data.posts.length === 9 ){
             setShowMore(true);
         }
         else{
             setShowMore(false)
         }
     }
-}
+};
   return (
     <div className="flex flex-col md:flex-row">
         <div className="p-7 border-b md:border-r md:min-h-screen border-gray-500">

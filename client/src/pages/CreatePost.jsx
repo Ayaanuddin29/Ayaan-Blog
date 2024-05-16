@@ -87,6 +87,7 @@ function CreatePost() {
         <option value='javascript'>JavaScript </option>
         <option value='reactjs'>ReactJS</option>
         <option value='nodejs'>NodeJS</option>
+        <option value='nextjs'>NextJS</option>
        </Select>
       </div>
       <div className="flex gap-4  justify-between items-center border-4 border-teal-500 border-dotted p-3">
